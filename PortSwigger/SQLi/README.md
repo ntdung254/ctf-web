@@ -44,3 +44,7 @@ Ta có thể phát hiện SQLi bằng cách thực hiện 1 loạt cách kiểm 
 * Các điều kiện logic `OR 1=1` và `OR 1=2` rồi quan sát **respones**.
 * Payload tạo **time delays**, theo dõi sự khác biệt thời gian phản hồi.
 * Các payload OAST được thiết kế để tương tác ngoài luồng, giám sát mọi phát sinh.
+
+## DBSM
+Mỗi DBSM khác nhau có syntax khác nhau, vì vậy cần tra cheat sheet. 
+`https://portswigger.net/web-security/sql-injection/cheat-sheet`
