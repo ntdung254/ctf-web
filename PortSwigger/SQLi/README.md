@@ -36,3 +36,11 @@ SQL Injection (SQLi) là 1 lỗ hổng bảo mật web cho phép attacker can th
   * **Time-based**
     * Mục đích: Ép database sleep trong một khoảng thời gian nếu điều kiện True.
 * **Out-of-band SQLi (OAST):** Ép database gửi request DNS hoặc HTTP ra server bên ngoài khi không thấy kết quả phản hồi nào từ web.
+
+## How to detect SQLi
+Ta có thể phát hiện SQLi bằng cách thực hiện 1 loạt cách kiểm tra trên các điểm input:
+* Kí tự `'` và quan sát **respones**.
+* Gửi 2 payload vào tham số, original value và different value, nếu 2 **respones** khác nhau chứng tỏ database bị ảnh hưởng.
+* Các điều kiện logic `OR 1=1` và `OR 1=2` rồi quan sát **respones**.
+* Payload tạo **time delays**, theo dõi sự khác biệt thời gian phản hồi.
+* Các payload OAST được thiết kế để tương tác ngoài luồng, giám sát mọi phát sinh.
