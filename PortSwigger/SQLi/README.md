@@ -8,7 +8,7 @@ SQL Injection (SQLi) là 1 lỗ hổng bảo mật web cho phép attacker can th
 
 ## Example 
 
-* Cho URL với query tương ứng: `https://insecure-website.com/products?category=Gifts`, `SELECT * FROM products WHERE category = 'Gifts' AND released = 1`
+* Cho URL: `https://insecure-website.com/products?category=Gifts` với query tương ứng: `SELECT * FROM products WHERE category = 'Gifts' AND released = 1`
 
 * Query này hiển thị các sản phẩm thuộc danh mục **Gifts** (điều kiện `category = 'Gifts'`) và sản phẩm đó đang được phát hành (điều kiện `released = 1`). Tuy nhiên nếu sửa URL: `https://insecure-website.com/products?category=Gifts'--` 
 
