@@ -46,7 +46,7 @@ Ta có thể phát hiện SQLi bằng cách thực hiện 1 loạt cách kiểm 
 
 ## DBSM
 Syntax SQL có thể khác nhau giữa các DBMS, vì vậy cần tham khảo cheat sheet phù hợp với DBMS đang được sử dụng.
-`https://portswigger.net/web-security/sql-injection/cheat-sheet`
+```https://portswigger.net/web-security/sql-injection/cheat-sheet```
 
 ## How to prevent SQLi
 SQL Injection xảy ra khi **user input** được nối trực tiếp vào câu lệnh SQL, cho phép input làm thay đổi cấu trúc của query. **Prepared Statements** giải quyết vấn đề này bằng cách tách câu lệnh SQL khỏi dữ liệu đầu vào: cấu trúc **query** được xác định trước, còn **user input** được truyền vào dưới dạng **parameters** và được xử lý như dữ liệu thuần túy.
