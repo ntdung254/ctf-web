@@ -1,11 +1,10 @@
 # SQL Injection Report
 
 ## Overview
-SQL Injection (SQLi) là 1 lỗ hổng bảo mật web cho phép attacker can thiệp vào các query mà application gửi đến database, từ đó attacker có thể truy cập, sửa hoặc xóa data trái phép.
+SQL Injection (SQLi) là 1 lỗ hổng bảo mật web xảy ra khi attacker có thể can thiệp vào câu lệnh SQL mà application gửi đến database, từ đó thực hiện các thao tác trái phép như truy cập, sửa đổi hoặc xóa dữ liệu.
 
 ## Root Cause
-**User input** bị nối vào query thay vì được xử lí tách biệt giữa code và data, làm ảnh hưởng cấu trúc SQL.
-
+**User input** không được tách biệt khỏi SQL query, khiến dữ liệu đầu vào có thể được database diễn giải như một phần của câu lệnh SQL.
 ## Example 
 
 * Cho URL: `https://insecure-website.com/products?category=Gifts` với query tương ứng: `SELECT * FROM products WHERE category = 'Gifts' AND released = 1`
@@ -46,7 +45,7 @@ Ta có thể phát hiện SQLi bằng cách thực hiện 1 loạt cách kiểm 
 * Các payload OAST được thiết kế để tương tác ngoài luồng, giám sát mọi phát sinh.
 
 ## DBSM
-Mỗi DBSM khác nhau có syntax khác nhau, vì vậy cần tra cheat sheet. 
+Syntax SQL có thể khác nhau giữa các DBMS, vì vậy cần tham khảo cheat sheet phù hợp với DBMS đang được sử dụng.
 `https://portswigger.net/web-security/sql-injection/cheat-sheet`
 
 ## How to prevent SQLi
