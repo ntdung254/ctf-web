@@ -37,8 +37,11 @@
 * **Out-of-band SQLi (OAST):** Ép database gửi request DNS hoặc HTTP ra server bên ngoài khi không thấy kết quả phản hồi nào từ web.
 
 ## How to detect SQLi
-Ta có thể phát hiện SQLi bằng cách thực hiện 1 loạt cách kiểm tra trên các điểm input:
-* Kí tự `'` và quan sát **respones**.
+1. Xác định **entry points** có khả năng truyền dữ liệu vào DB (GET, POST, HTTP Headers, Cookies, API Endpoints)
+2. Gửi các **payload** đặc biệt tại các **entry points** vừa tìm được để xác định input có ảnh hưởng SQL query hay không:
+   * Kí tự phá vỡ cú pháp: `'`,`"`,`\`,`)`.
+   * Toán tử logic: `AND 1=1`(True) và `AND 1=2`(False).
+   * Ki tự nối chuỗi hoặc ngắt lệnh: `;`,`--`,`#`.
 * Gửi 2 payload vào tham số, original value và different value, nếu 2 **respones** khác nhau chứng tỏ database bị ảnh hưởng.
 * Các điều kiện logic `OR 1=1` và `OR 1=2` rồi quan sát **respones**.
 * Payload tạo **time delays**, theo dõi sự khác biệt thời gian phản hồi.
