@@ -52,11 +52,11 @@ Mỗi DBSM khác nhau có syntax khác nhau, vì vậy cần tra cheat sheet.
 ## How to prevent SQLi
 SQL Injection xảy ra khi **user input** được nối trực tiếp vào câu lệnh SQL, cho phép input làm thay đổi cấu trúc của query. **Prepared Statements** giải quyết vấn đề này bằng cách tách câu lệnh SQL khỏi dữ liệu đầu vào: cấu trúc **query** được xác định trước, còn **user input** được truyền vào dưới dạng **parameters** và được xử lý như dữ liệu thuần túy.
 * Vulnerable:
-`
+```
 String query = "SELECT * FROM products WHERE category = '"+ input + "'";
 Statement statement = connection.createStatement();
 ResultSet resultSet = statement.executeQuery(query);
-`
+```
 * Non-vul:
 ` PreparedStatement statement = connection.prepareStatement("SELECT * FROM products WHERE category = ?");
 statement.setString(1, input);
