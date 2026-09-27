@@ -48,3 +48,14 @@ Ta có thể phát hiện SQLi bằng cách thực hiện 1 loạt cách kiểm 
 ## DBSM
 Mỗi DBSM khác nhau có syntax khác nhau, vì vậy cần tra cheat sheet. 
 `https://portswigger.net/web-security/sql-injection/cheat-sheet`
+
+## How to prevent SQLi
+Cốt lõi của SQLi là do **user input** bị nối vào các query gây sai lệch khi application gửi đến database. Cách giải quyết là sử dụng **Prepared Statements**, database sẽ biên dịch trước cấu trúc của câu lệnh SQL, user input sau đó sẽ được truyền vào dưới dạng parameters độc lập
+Vulnerable:
+` String query = "SELECT * FROM products WHERE category = '"+ input + "'";
+Statement statement = connection.createStatement();
+ResultSet resultSet = statement.executeQuery(query); `
+Non-vul:
+` PreparedStatement statement = connection.prepareStatement("SELECT * FROM products WHERE category = ?");
+statement.setString(1, input);
+ResultSet resultSet = statement.executeQuery(); `
