@@ -57,7 +57,9 @@ String query = "SELECT * FROM products WHERE category = '"+ input + "'";
 Statement statement = connection.createStatement();
 ResultSet resultSet = statement.executeQuery(query);
 ```
-* Non-vul:
-` PreparedStatement statement = connection.prepareStatement("SELECT * FROM products WHERE category = ?");
+* Not-Vulnerable:
+```
+PreparedStatement statement = connection.prepareStatement("SELECT * FROM products WHERE category = ?");
 statement.setString(1, input);
-ResultSet resultSet = statement.executeQuery(); `
+ResultSet resultSet = statement.executeQuery();
+```
