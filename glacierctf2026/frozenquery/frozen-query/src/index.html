@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Glacier Avalanche Service</title>
+<style>
+:root {
+  --bg: #0a1420; --panel: #112233; --panel-2: #0d1b2a; --line: #23405c;
+  --ink: #dce9f5; --muted: #8aa4bd; --accent: #7fd1ff; --warn: #ffb347;
+  --l1: #9ee35b; --l2: #ffe14d; --l3: #ff9a2e; --l4: #ff3b3b; --l5: #c0182c;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+a { color: var(--accent); }
+header { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); }
+header svg { display: block; width: 100%; height: 180px; }
+.title { position: absolute; left: 0; right: 0; top: 28px; text-align: center; }
+.title h1 { margin: 0; font-size: clamp(1.6rem, 4vw, 2.4rem); letter-spacing: .04em; }
+.title p { margin: .2rem 0 0; color: var(--muted); font-family: var(--mono); font-size: .85rem; }
+main { max-width: 980px; margin: 0 auto; padding: 24px 16px 48px; }
+h2 { font-size: 1.1rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 2.2rem 0 .8rem; }
+.log { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; }
+.log p { margin: .4rem 0; }
+.log .entry { font-family: var(--mono); font-size: .85rem; color: var(--muted); }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 16px; position: relative; }
+.card h3 { margin: 0 0 .3rem; text-transform: capitalize; }
+.level { display: inline-flex; align-items: center; gap: .5rem; font-weight: 700; }
+.chip { width: 28px; height: 28px; border-radius: 6px; display: grid; place-items: center; color: #111; font-family: var(--mono); }
+.note { color: var(--muted); font-size: .92rem; margin-top: .5rem; min-height: 2.8em; }
+.cache { position: absolute; top: 14px; right: 14px; font-family: var(--mono); font-size: .7rem; color: var(--muted); }
+.locked { background: repeating-linear-gradient(135deg, var(--panel) 0 12px, var(--panel-2) 12px 24px); }
+.locked .chip { background: #333; color: var(--muted); }
+.console { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 16px; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 10px; font-family: var(--mono); font-size: .9rem; }
+.method { background: var(--accent); color: #062033; font-weight: 700; padding: 4px 10px; border-radius: 6px; }
+textarea, pre {
+  width: 100%; background: var(--panel-2); color: var(--ink); border: 1px solid var(--line);
+  border-radius: 8px; padding: 12px; font: .88rem/1.5 var(--mono); margin: 0;
+}
+textarea { min-height: 110px; resize: vertical; }
+pre { white-space: pre-wrap; word-break: break-all; min-height: 80px; }
+button {
+  background: var(--accent); color: #062033; border: 0; border-radius: 8px; padding: 10px 18px;
+  font-weight: 700; cursor: pointer; margin: 10px 0;
+}
+button:hover { filter: brightness(1.1); }
+button:focus-visible, textarea:focus-visible { outline: 2px solid var(--warn); outline-offset: 2px; }
+.scale { display: flex; gap: 6px; flex-wrap: wrap; font-size: .8rem; color: var(--muted); }
+.scale span { display: inline-flex; align-items: center; gap: 4px; }
+.scale i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+footer { text-align: center; color: var(--muted); font-size: .8rem; padding: 24px 16px; border-top: 1px solid var(--line); }
+</style>
+</head>
+<body>
+<header>
+  <svg viewBox="0 0 1000 180" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#050b14"/><stop offset="1" stop-color="#14304a"/>
+      </linearGradient>
+    </defs>
+    <rect width="1000" height="180" fill="url(#sky)"/>
+    <polygon points="0,180 120,95 210,140 330,60 420,120 520,30 610,110 700,70 820,135 900,90 1000,150 1000,180" fill="#1b3550"/>
+    <polygon points="520,30 545,52 530,50 512,62 498,48" fill="#e8f3ff"/>
+    <polygon points="330,60 350,78 336,76 318,86 310,74" fill="#cfe2f5"/>
+    <polygon points="0,180 90,150 200,165 300,128 400,160 520,118 640,158 760,130 880,162 1000,140 1000,180" fill="#0f2236"/>
+  </svg>
+  <div class="title">
+    <h1>&#10052; Glacier Avalanche Service</h1>
+    <p>Station Eisgrat &middot; 2&thinsp;871&thinsp;m &middot; bulletins via HTTP QUERY</p>
+  </div>
+</header>
+
+<main>
+  <h2>Station logbook</h2>
+  <div class="log">
+    <p class="entry">Nov 2026 &mdash; warden on duty</p>
+    <p>Last winter's bulletin server folded under the weekend rush: every skier
+    hammered <code>GET /bulletin?region=...</code> and the caches choked on
+    query strings. This season we moved everything to the shiny new
+    <a href="https://www.rfc-editor.org/rfc/rfc10008">HTTP QUERY method</a>.
+    You send what you want in the body, and our edge cache normalizes and stores it.
+    Fast, even in a whiteout.</p>
+    <p>The <strong>summit</strong> has been closed to the public since the slide last
+    March. Only the internal auditor reads its bulletin; it re-checks the
+    summit every few seconds, bypassing the cache, so the readings are always fresh.</p>
+    <p class="entry">Note to self: the edge filter keeps nosy hikers away from the summit data. Nothing to worry about.</p>
+  </div>
+
+  <h2>Today's bulletins</h2>
+  <div class="grid" id="cards">
+    <div class="card locked">
+      <h3>summit</h3>
+      <div class="level"><span class="chip">?</span> closed</div>
+      <div class="note">Closed since the March slide. Auditors only.</div>
+    </div>
+  </div>
+  <div class="scale" style="margin-top:12px">
+    <span><i style="background:var(--l1)"></i>1 low</span>
+    <span><i style="background:var(--l2)"></i>2 moderate</span>
+    <span><i style="background:var(--l3)"></i>3 considerable</span>
+    <span><i style="background:var(--l4)"></i>4 high</span>
+    <span><i style="background:var(--l5)"></i>5 very high</span>
+  </div>
+
+  <h2>Query console</h2>
+  <div class="console">
+    <div class="row"><span class="method">QUERY</span> /api/bulletin
+      <span style="color:var(--muted)">Content-Type: application/json &middot; Accept: application/json</span></div>
+    <label for="body" class="row" style="margin:0 0 6px;color:var(--muted)">Request body</label>
+    <textarea id="body" spellcheck="false">{"region": "ridge", "fields": ["level", "note"]}</textarea>
+    <button id="send">Send QUERY</button>
+    <pre id="out" aria-live="polite">Response will appear here.</pre>
+  </div>
+</main>
+
+<footer>Glacier Avalanche Service &middot; powered by glacier-edge &middot; RFC 10008 compliant (mostly)</footer>
+
+<script>
+const COLORS = ["", "var(--l1)", "var(--l2)", "var(--l3)", "var(--l4)", "var(--l5)"];
+const NAMES = ["", "low", "moderate", "considerable", "high", "very high"];
+
+function query(body) {
+  return fetch("/api/bulletin", {
+    method: "QUERY",
+    headers: { "Content-Type": "application/json", "Accept": "application/json" },
+    body: JSON.stringify(body),
+  });
+}
+
+async function loadCards() {
+  const cards = document.getElementById("cards");
+  for (const region of ["glacier", "ridge", "valley"]) {
+    const card = document.createElement("div");
+    card.className = "card";
+    try {
+      const r = await query({ region, fields: ["level", "note"] });
+      const d = await r.json();
+      const chip = document.createElement("span");
+      chip.className = "chip";
+      chip.style.background = COLORS[d.level] || "#555";
+      chip.textContent = d.level;
+      card.innerHTML = '<span class="cache"></span><h3></h3><div class="level"></div><div class="note"></div>';
+      card.querySelector(".cache").textContent = r.headers.get("X-Cache") || "";
+      card.querySelector("h3").textContent = region;
+      card.querySelector(".level").append(chip, " " + (NAMES[d.level] || ""));
+      card.querySelector(".note").textContent = d.note;
+    } catch (e) {
+      card.textContent = region + ": station unreachable";
+    }
+    cards.prepend(card);
+  }
+}
+
+document.getElementById("send").addEventListener("click", async () => {
+  const out = document.getElementById("out");
+  const raw = document.getElementById("body").value;
+  try {
+    const r = await fetch("/api/bulletin", {
+      method: "QUERY",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: raw,
+    });
+    const head = ["X-Cache", "Cache-Control", "Date"]
+      .map(h => `${h}: ${r.headers.get(h) ?? "-"}`).join("\n");
+    out.textContent = `HTTP ${r.status}\n${head}\n\n${await r.text()}`;
+  } catch (e) {
+    out.textContent = "Request failed: " + e;
+  }
+});
+
+loadCards();
+</script>
+</body>
+</html>
