@@ -10,7 +10,7 @@ Challenge cung cấp 1 website nhập tên 1 đội vào form và ấn nút Subm
 Trong file app.py, ứng dụng định nghĩa 2 danh sách:
 - AT_TEAMS: Những đội được đánh giá không sử dụng AI.
 - LOSTEAMS: Những đội được đánh giá có sử dụng AI.
-```pythond
+```python
 LOSTEAMS = [
     "LosFuzzys", "S1gW0zzys", "podmanenjoyer"
 ]
@@ -33,7 +33,7 @@ Luồng hoạt động của ứng dụng:
 3. Tạo nội dung thông báo bằng Jinjia2.
 4. Kiểm tra tên đội có thuộc AT_TEAMS hoặc LOSTEAMS hay không.
 5. Render trang HTML và hiển thị kết quả.
-```
+```python
 @app.route('/check_team')
 def challenge():
     team_name = flask.request.args.get("teamname")
