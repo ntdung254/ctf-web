@@ -1,7 +1,8 @@
 # Team-Check
 
 ## Description
-Lately, a lot of teams have started to use AI. We built a small webapplication to check if people use it for CTFs.
+Lately, a lot of teams have started to use AI.
+We built a small webapplication to check if people use it for CTFs
 
 ## Analysis
 
