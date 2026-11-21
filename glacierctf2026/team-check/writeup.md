@@ -4,7 +4,7 @@
 Lately, a lot of teams have started to use AI. We built a small webapplication to check if people use it for CTFs.
 
 ## Analysis
-Challenge cung cấp 1 website nhập tên 1 đội vào form và ấn nút Submit để kiểm tra 1 đội đó có sử dụng AI không. Submit thử tên 1 đội và nhìn vào url -> Ta biết được cách server xử lí tham số ô ```teamname```.
+Challenge cung cấp 1 website nhập tên 1 đội vào form và ấn nút ```Submit``` để kiểm tra 1 đội đó có sử dụng AI không. Submit thử tên 1 đội và nhìn vào url -> Ta biết được cách server xử lí tham số ô ```teamname```.
 ![](images/1.png)
 
 Trong file app.py, ứng dụng định nghĩa 2 danh sách:
