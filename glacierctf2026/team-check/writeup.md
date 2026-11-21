@@ -90,3 +90,4 @@ Thay vì tìm cách đọc trực tiếp file trên hệ thống, có thể tậ
 ```
 gctf{8a61038adf31fe0f17aaae2d031fbab4406f5b9cee69583a34e481f8a4c05b9a}
 ```
+![](images/flag.png)
