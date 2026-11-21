@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Team-Check</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Based on crumbs by CozyBadger (Daniel Schier) -->
+    <link href=" https://cdn.jsdelivr.net/npm/@cozybadgerde/crumbs@1.1.0/dist/crumbs.min.css " rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar" aria-label="main navigation">
+        <ul style="list-style: none; margin: 0; padding: 0;">
+            <li>
+                <a style="display: block; color: inherit;" href="index.html">
+                    <strong>Team-Check</strong> - Check if CTF-Teams are using AI
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <section class="section" id="contact">
+        <div class="container">
+            <h2 class="text-center">Check Team</h2>
+            {% if team_msg and info_color %}
+            <h3 class="alert {{info_color}}"> {{ team_msg }} </h3>
+            {% endif %}
+
+            <div class="grid">
+                <div class="col-4">
+                    <form action="/check_team">
+                        <input type="text" placeholder="Teamname" id="teamname" name="teamname">
+                        <button type="submit" class="button success">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
