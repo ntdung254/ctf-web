@@ -61,7 +61,7 @@ def challenge():
     )
 ```
 
-Python sẽ thay thế ```{team_name}``` bằng string nhập vào. Sau đó hàm render_template_string() biên dịch và thực thi string đó như một Jinja2 template -> Xác định được lỗi SSTI.
+Ở đoạn code này python sẽ thay thế ```{team_name}``` bằng string nhập vào. Sau đó hàm render_template_string() biên dịch và thực thi string đó như một Jinja2 template -> Xác định được lỗi SSTI.
 ```python
 team_msg = flask.render_template_string(
     f"We are unsure if {team_name} has used AI in the past."
