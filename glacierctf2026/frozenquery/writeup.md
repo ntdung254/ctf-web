@@ -10,7 +10,7 @@ Only auditors may read the summit bulletin. Right?
 ## Analysis
 
 ## Script
-``` 
+```python
 #!/usr/bin/env python3
 
 import gzip
