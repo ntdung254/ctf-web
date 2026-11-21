@@ -26,8 +26,7 @@ AT_TEAMS = [
 ]
 ```
 
-Endpoint xử lí chính là ```/checkteam```
-Luồng hoạt động của ứng dụng:
+Endpoint xử lí chính là ```/checkteam```. Luồng hoạt động của ứng dụng:
 1. Nhận tham số ```teamname``` từ HTTP request.
 2. Kiểm tra dữ liệu đầu vào.
 3. Tạo nội dung thông báo bằng Jinjia2.
