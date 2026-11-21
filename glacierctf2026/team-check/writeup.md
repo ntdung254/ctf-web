@@ -79,7 +79,7 @@ Trong file ```entrypoint.sh```, flag được đọc từ ```/flag.txt``` và l�
 ```python
 export FLAG=$(cat /flag.txt)
 ```
-Thay vì tìm cách đọc trực tiếp file trên hệ thống, có thể tận dụng SSTI để truy cập biến môi trường của tiến trình Flask. Ứng dụng đã chặn ```{{``` và ```}}```, tuy nhiên Jinja2 hỗ trợ ```{% print ... %}``` để đánh giá và xuất kết quả của một biểu thức. Kết hợp với đối tượng cycler có sẵn trong template context, ta có thể truy cập Python global namespace thông qua thuộc tính __globals__, từ đó tiếp cận module os và các biến môi trường.
+Thay vì tìm cách đọc trực tiếp file trên hệ thống, có thể tận dụng SSTI để truy cập biến môi trường của Flask. Ứng dụng đã chặn ```{{``` và ```}}```, tuy nhiên Jinja2 hỗ trợ ```{% print ... %}``` để đánh giá và xuất kết quả của một biểu thức. Kết hợp cycler có sẵn, ta có thể truy cập Python global namespace thông qua __globals__, từ đó tiếp cận module os và các biến môi trường. Nhập payload vào ô Teamname sau đó Submit, ta có được flag.
 
 ## Payload
 ```jinja2
