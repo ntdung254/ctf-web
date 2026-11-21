@@ -7,7 +7,7 @@ Lately, a lot of teams have started to use AI. We built a small webapplication t
 Challenge cung cấp 1 website nhập tên đội và ấn nút ```Submit``` để kiểm tra đội đó có sử dụng AI không. Submit thử tên 1 đội và nhìn vào url -> Ta biết được cách server xử lí tham số ô ```teamname```.
 ![](images/1.png)
 
-Trong file app.py, ứng dụng định nghĩa 2 danh sách:
+Trong file ```app.py```, ứng dụng định nghĩa 2 danh sách:
 - AT_TEAMS: Những đội được đánh giá không sử dụng AI.
 - LOSTEAMS: Những đội được đánh giá có sử dụng AI.
 ```python
