@@ -73,3 +73,4 @@ if __name__ == "__main__":
 ```
 gctf{QU3RY_c4ch3_k3y5_mu5t_c0v3r_th3_wh0l3_r3qu35t}
 ```
+![](images/flag.png)
